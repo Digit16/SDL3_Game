@@ -104,13 +104,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\dev\SDL\include;C:\SDL3\SDL3_image-3.2.4\include;C:\SDL3\SDL3_ttf-3.2.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\dev\SDL\include;C:\SDL3\SDL3_image-3.2.4\include;C:\SDL3\SDL3_ttf-3.2.0\include;C:\dev\shaderc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\SDL3\SDL3_image-3.2.4\lib\x64;C:\SDL3\SDL3_ttf-3.2.0\lib\x64;C:\dev\SDL\VisualC\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;SDL3_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\dev\shaderc\lib;C:\SDL3\SDL3_image-3.2.4\lib\x64;C:\SDL3\SDL3_ttf-3.2.0\lib\x64;C:\dev\SDL\VisualC\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;SDL3_ttf.lib;shaderc_combined.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,22 +131,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="game.c" />
-    <ClCompile Include="init_gpu.c" />
+    <ClCompile Include="init_shaders.c" />
     <ClCompile Include="init_sdl.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="media.c" />
+    <ClCompile Include="string_view.c" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".clang-format" />
     <None Include="SDL3.dll" />
     <None Include="SDL3_image.dll" />
     <None Include="SDL3_ttf.dll" />
+    <None Include="shaders\fragment_shader.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="init_gpu.h" />
+    <ClInclude Include="init_shaders.h" />
     <ClInclude Include="init_sdl.h" />
     <ClInclude Include="media.h" />
+    <ClInclude Include="string_view.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

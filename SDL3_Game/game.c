@@ -1,4 +1,5 @@
 #include "game.h"
+#include "init_shaders.h"
 #include "media.h"
 
 bool game_new(struct Game **game) {
@@ -13,12 +14,29 @@ bool game_new(struct Game **game) {
         return false;
     }
 
+
+
+
+
     if (!game_load_media(g)) {
         return false;
     }
 
-    srand((unsigned int)time(NULL));
+  
 
+    if (!game_init_shaders(g)) {
+        return false;
+    }
+    SDL_ClearError();
+
+    g->target = SDL_CreateTexture(g->renderer, SDL_PIXELFORMAT_ARGB32, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH, WINDOW_HEIGHT);
+    if (!g->target) {
+        SDL_Log("Couldn't create target texture: %s\n", SDL_GetError());
+        return SDL_APP_FAILURE;
+    }
+
+    srand((unsigned int)time(NULL));
+    
     g->is_running = true;
 
     return true;
@@ -91,10 +109,28 @@ void game_set_random_draw_color(struct Game *g) {
 }
 
 void game_draw(struct Game *g) {
+    //SDL_SetRenderTarget(renderer, target);
+    //DrawScene();
+    //SDL_SetRenderTarget(renderer, NULL);
+    //SDL_SetRenderGPUState(renderer, effect->state);
+    //SDL_RenderTexture(renderer, target, NULL, NULL);
+    //SDL_SetRenderGPUState(renderer, NULL);
+
+    //SDL_ClearError();
+    SDL_SetRenderTarget(g->renderer, g->target);
+    
+
     SDL_RenderClear(g->renderer);
     SDL_FRect dst = {0, 0, 400, 200};
     SDL_RenderTexture(g->renderer, g->background, 0, &dst);
     SDL_RenderTexture(g->renderer, g->text_texture, 0, &g->text_rect);
+
+
+    SDL_SetRenderTarget(g->renderer, NULL);
+    SDL_SetRenderGPUState(g->renderer, g->render_state);
+    SDL_RenderTexture(g->renderer, g->target, NULL, NULL);
+    SDL_SetRenderGPUState(g->renderer, NULL);
+
     SDL_RenderPresent(g->renderer);
 }
 

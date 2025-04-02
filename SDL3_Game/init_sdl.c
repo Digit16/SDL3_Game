@@ -12,7 +12,7 @@ bool game_init_sdl(struct Game* g) {
         return false;
     }
 
-    g->window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
+    g->window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
     if (!g->window) {
         fprintf(stderr, "Error creating window: %s\n", SDL_GetError());
         return false;
@@ -23,26 +23,7 @@ bool game_init_sdl(struct Game* g) {
         fprintf(stderr, "Error creating renderer: %s\n", SDL_GetError());
         return false;
     }
-
-    //SDL_GPUDevice *device = (SDL_GPUDevice *)SDL_GetPointerProperty(SDL_GetRendererProperties(g->renderer), SDL_PROP_RENDERER_GPU_DEVICE_POINTER, NULL);
-    //if (!device) {
-    //    SDL_Log("Couldn't get GPU device: %s\n", SDL_GetError());
-    //    return false;
-    //}
-
-    //SDL_GPUShaderFormat formats = SDL_GetGPUShaderFormats(device);
-    //if (formats == SDL_GPU_SHADERFORMAT_INVALID) {
-    //    SDL_Log("Couldn't get supported shader formats: %s", SDL_GetError());
-    //    return false;
-    //}
-
-    //SDL_GPUShaderCreateInfo info;
-    //SDL_zero(info);
-
-    //info.format = SDL_GPU_SHADERFORMAT_SPIRV;
-    //info.code = data->spirv_shader_source;
-    //info.code_size = data->spirv_shader_source_len;
-
+    SDL_SetRenderVSync(g->renderer, 1);
 
     SDL_Surface* icon_surface = IMG_Load("images/C_Logo.png");
 

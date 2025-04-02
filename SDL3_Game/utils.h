@@ -1,0 +1,6 @@
+#ifndef SDL3_GAME_UTILS_H
+#define SDL3_GAME_UTILS_H
+
+
+
+#endif // SDL3_GAME_UTILS_H
