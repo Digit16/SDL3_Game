@@ -130,12 +130,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="game.c" />
+    <ClCompile Include="init_gpu.c" />
+    <ClCompile Include="init_sdl.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="media.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SDL3.dll" />
     <None Include="SDL3_image.dll" />
     <None Include="SDL3_ttf.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="common.h" />
+    <ClInclude Include="game.h" />
+    <ClInclude Include="init_gpu.h" />
+    <ClInclude Include="init_sdl.h" />
+    <ClInclude Include="media.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
