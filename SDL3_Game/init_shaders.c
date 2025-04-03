@@ -1,7 +1,7 @@
 #include "init_shaders.h"
-#include "shaderc/shaderc.h"
-#include "read_file.h"
 #include "game.h"
+#include "read_file.h"
+#include "shaderc/shaderc.h"
 
 bool game_init_shaders(struct Game *g) {
 
@@ -14,7 +14,7 @@ bool game_init_shaders(struct Game *g) {
 
     shaderc_compiler_t shader_compiler = shaderc_compiler_initialize();
     shaderc_compile_options_t shader_compiler_options = shaderc_compile_options_initialize();
-    
+
     // create crt shader
     struct StringView fragment_shader_source;
     read_file(FRAGMENT_SHADER_SOURCE, &fragment_shader_source);
@@ -57,7 +57,7 @@ bool game_init_shaders(struct Game *g) {
     SDL_GPURenderState *state = SDL_CreateGPURenderState(g->renderer, &desc);
     GAME_ASSERT_SDL(state, "Couldn't create render state");
 
-    g->shader = (struct ShaderData) {
+    g->shader = (struct ShaderData){
         .device = device,
         .shader = shader,
         .state = state

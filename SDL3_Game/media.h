@@ -4,6 +4,6 @@
 #include "common.h"
 #include "game.h"
 
-bool game_load_media(struct Game* g);
+bool game_load_media(struct Game *g);
 
 #endif // SDL3_GAME_MEDIA_H

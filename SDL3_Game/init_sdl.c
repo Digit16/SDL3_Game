@@ -1,7 +1,6 @@
 #include "init_sdl.h"
 
-
-bool game_init_sdl(struct Game* g) {
+bool game_init_sdl(struct Game *g) {
 
     GAME_ASSERT_SDL(SDL_Init(SDL_FLAGS), "Error initializing SDL");
     GAME_ASSERT_SDL(TTF_Init(), "Error initializing TTF");
@@ -12,7 +11,7 @@ bool game_init_sdl(struct Game* g) {
     g->renderer = SDL_CreateRenderer(g->window, "gpu");
     GAME_ASSERT_SDL(g->renderer, "Error creating renderer");
 
-    SDL_Surface* icon_surface = IMG_Load("images/C_Logo.png");
+    SDL_Surface *icon_surface = IMG_Load("images/C_Logo.png");
     GAME_ASSERT_SDL(icon_surface, "Error loading icon surface");
 
     bool is_icon_set = SDL_SetWindowIcon(g->window, icon_surface);

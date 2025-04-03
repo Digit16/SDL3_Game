@@ -11,7 +11,7 @@ struct ShaderData {
 
 #include "game.h"
 
-bool game_init_shaders(struct Game* g);
+bool game_init_shaders(struct Game *g);
 
 void shader_data_free(struct ShaderData *shader_data);
 

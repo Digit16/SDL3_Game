@@ -1,10 +1,9 @@
-#ifndef SDL3_GAME_READ_FILE_H  
-#define SDL3_GAME_READ_FILE_H  
+#ifndef SDL3_GAME_READ_FILE_H
+#define SDL3_GAME_READ_FILE_H
 
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-
 
 struct StringView {
     const char *data;

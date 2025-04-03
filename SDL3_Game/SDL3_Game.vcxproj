@@ -151,7 +151,6 @@
     <ClInclude Include="init_sdl.h" />
     <ClInclude Include="media.h" />
     <ClInclude Include="read_file.h" />
-    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
