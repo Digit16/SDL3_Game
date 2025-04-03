@@ -14,15 +14,9 @@ bool game_new(struct Game **game) {
         return false;
     }
 
-
-
-
-
     if (!game_load_media(g)) {
         return false;
     }
-
-  
 
     if (!game_init_shaders(g)) {
         return false;
@@ -36,7 +30,7 @@ bool game_new(struct Game **game) {
     }
 
     srand((unsigned int)time(NULL));
-    
+
     g->is_running = true;
 
     return true;
@@ -109,22 +103,12 @@ void game_set_random_draw_color(struct Game *g) {
 }
 
 void game_draw(struct Game *g) {
-    //SDL_SetRenderTarget(renderer, target);
-    //DrawScene();
-    //SDL_SetRenderTarget(renderer, NULL);
-    //SDL_SetRenderGPUState(renderer, effect->state);
-    //SDL_RenderTexture(renderer, target, NULL, NULL);
-    //SDL_SetRenderGPUState(renderer, NULL);
-
-    //SDL_ClearError();
     SDL_SetRenderTarget(g->renderer, g->target);
-    
 
     SDL_RenderClear(g->renderer);
     SDL_FRect dst = {0, 0, 400, 200};
     SDL_RenderTexture(g->renderer, g->background, 0, &dst);
     SDL_RenderTexture(g->renderer, g->text_texture, 0, &g->text_rect);
-
 
     SDL_SetRenderTarget(g->renderer, NULL);
     SDL_SetRenderGPUState(g->renderer, g->render_state);

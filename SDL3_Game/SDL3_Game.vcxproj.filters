@@ -30,7 +30,7 @@
     <ClCompile Include="init_shaders.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="string_view.c">
+    <ClCompile Include="read_file.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,7 +60,7 @@
     <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="string_view.h">
+    <ClInclude Include="read_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -135,7 +135,7 @@
     <ClCompile Include="init_sdl.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="media.c" />
-    <ClCompile Include="string_view.c" />
+    <ClCompile Include="read_file.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
@@ -150,7 +150,7 @@
     <ClInclude Include="init_shaders.h" />
     <ClInclude Include="init_sdl.h" />
     <ClInclude Include="media.h" />
-    <ClInclude Include="string_view.h" />
+    <ClInclude Include="read_file.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

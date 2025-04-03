@@ -22,4 +22,6 @@
 
 #define TEXT_VALUE "Hello World!"
 
+#define FRAGMENT_SHADER_SOURCE "shaders/fragment_shader.frag"
+
 #endif // SDL3_GAME_COMMON_H
