@@ -68,4 +68,7 @@ bool game_init_shaders(struct Game *g) {
 void shader_data_free(struct ShaderData *shader_data) {
     SDL_ReleaseGPUShader(shader_data->device, shader_data->shader);
     SDL_DestroyGPURenderState(shader_data->state);
+
+    shader_data->shader = NULL;
+    shader_data->state = NULL;
 }
