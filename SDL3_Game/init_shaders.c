@@ -24,7 +24,6 @@ bool game_init_shaders(struct Game *g) {
         shaderc_fragment_shader, "fragment_shader.frag", "main", shader_compiler_options
     );
 
-    // free string view
     string_view_free(&fragment_shader_source);
     shaderc_compile_options_release(shader_compiler_options);
     shaderc_compiler_release(shader_compiler);
