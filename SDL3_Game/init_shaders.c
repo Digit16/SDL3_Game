@@ -10,21 +10,11 @@ struct ShaderData {
 bool game_init_shaders(struct Game *g) {
 
     g->device = (SDL_GPUDevice *)SDL_GetPointerProperty(SDL_GetRendererProperties(g->renderer), SDL_PROP_RENDERER_GPU_DEVICE_POINTER, NULL);
-    if (!g->device) {
-        SDL_Log("Couldn't get GPU device: %s\n", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(g->device, "Couldn't get GPU device");
 
     SDL_GPUShaderFormat formats = SDL_GetGPUShaderFormats(g->device);
-    if (formats == SDL_GPU_SHADERFORMAT_INVALID) {
-        SDL_Log("Couldn't get supported shader formats: %s", SDL_GetError());
-        return false;
-    }
-
-    if (!(formats & SDL_GPU_SHADERFORMAT_SPIRV)) {
-        SDL_Log("SPIR-V shader format not supported");
-        return false;
-    }
+    GAME_ASSERT_SDL(formats != SDL_GPU_SHADERFORMAT_INVALID, "Couldn't get supported shader formats");
+    GAME_ASSERT_MSG(formats & SDL_GPU_SHADERFORMAT_SPIRV, "SPIR-V shader format not supported");
 
     shaderc_compiler_t shader_compiler = shaderc_compiler_initialize();
     shaderc_compile_options_t shader_compiler_options = shaderc_compile_options_initialize();
@@ -35,7 +25,8 @@ bool game_init_shaders(struct Game *g) {
 
     shaderc_compilation_result_t result = shaderc_compile_into_spv(
         shader_compiler, fragment_shader_source.data, fragment_shader_source.size,
-        shaderc_fragment_shader, "fragment_shader.frag", "main", shader_compiler_options);
+        shaderc_fragment_shader, "fragment_shader.frag", "main", shader_compiler_options
+    );
 
     // free string view
     free_string_view(&fragment_shader_source);
@@ -43,7 +34,7 @@ bool game_init_shaders(struct Game *g) {
     shaderc_compiler_release(shader_compiler);
 
     if (shaderc_result_get_compilation_status(result) != shaderc_compilation_status_success) {
-        printf("Shader compilation failed: %s\n", shaderc_result_get_error_message(result));
+        SDL_Log("Shader compilation failed: %s\n", shaderc_result_get_error_message(result));
         return false;
     }
 
@@ -62,20 +53,13 @@ bool game_init_shaders(struct Game *g) {
     info.stage = SDL_GPU_SHADERSTAGE_FRAGMENT;
 
     SDL_GPUShader *shader = SDL_CreateGPUShader(g->device, &info);
-
-    if (!shader) {
-        SDL_Log("Couldn't create shader: %s", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(shader, "Couldn't create shader");
 
     SDL_GPURenderStateDesc desc;
     SDL_INIT_INTERFACE(&desc);
     desc.fragment_shader = shader;
     g->render_state = SDL_CreateGPURenderState(g->renderer, &desc);
-    if (!g->render_state) {
-        SDL_Log("Couldn't create render state: %s", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(g->render_state, "Couldn't create render state");
 
     return true;
 }

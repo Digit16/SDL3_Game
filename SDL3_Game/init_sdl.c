@@ -2,42 +2,22 @@
 
 
 bool game_init_sdl(struct Game* g) {
-    if (!SDL_Init(SDL_FLAGS)) {
-        fprintf(stderr, "Error initializing SDL: %s\n", SDL_GetError());
-        return false;
-    }
 
-    if (!TTF_Init()) {
-        fprintf(stderr, "Error initializing TTF: %s\n", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(SDL_Init(SDL_FLAGS), "Error initializing SDL");
+    GAME_ASSERT_SDL(TTF_Init(), "Error initializing TTF");
 
     g->window = SDL_CreateWindow(WINDOW_TITLE, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL);
-    if (!g->window) {
-        fprintf(stderr, "Error creating window: %s\n", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(g->window, "Error creating window");
 
     g->renderer = SDL_CreateRenderer(g->window, "gpu");
-    if (!g->renderer) {
-        fprintf(stderr, "Error creating renderer: %s\n", SDL_GetError());
-        return false;
-    }
-    SDL_SetRenderVSync(g->renderer, 1);
+    GAME_ASSERT_SDL(g->renderer, "Error creating renderer");
 
     SDL_Surface* icon_surface = IMG_Load("images/C_Logo.png");
-
-    if (!icon_surface) {
-        fprintf(stderr, "Error loading icon surface: %s\n", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(icon_surface, "Error loading icon surface");
 
     bool is_icon_set = SDL_SetWindowIcon(g->window, icon_surface);
     SDL_DestroySurface(icon_surface);
-    if (!is_icon_set) {
-        fprintf(stderr, "Error setting window icon: %s\n", SDL_GetError());
-        return false;
-    }
+    GAME_ASSERT_SDL(is_icon_set, "Error setting window icon");
 
     return true;
 }

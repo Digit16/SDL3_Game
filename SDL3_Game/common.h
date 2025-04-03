@@ -24,4 +24,27 @@
 
 #define FRAGMENT_SHADER_SOURCE "shaders/fragment_shader.frag"
 
+#define GAME_ASSERT_SDL(x, msg)                         \
+    do {                                                \
+        if (!(x)) {                                     \
+            SDL_Log("%s: %s\n", (msg), SDL_GetError()); \
+            return false;                               \
+        }                                               \
+    } while (0)
+
+#define GAME_ASSERT_MSG(x, msg)     \
+    do {                            \
+        if (!(x)) {                 \
+            SDL_Log("%s\n", (msg)); \
+            return false;           \
+        }                           \
+    } while (0)
+
+#define GAME_ASSERT(x)    \
+    do {                  \
+        if (!(x)) {       \
+            return false; \
+        }                 \
+    } while (0)
+
 #endif // SDL3_GAME_COMMON_H

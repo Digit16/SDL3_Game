@@ -1,5 +1,6 @@
 #include "game.h"
 #include "init_shaders.h"
+#include "init_sdl.h"
 #include "media.h"
 
 bool game_new(struct Game **game) {
@@ -10,24 +11,12 @@ bool game_new(struct Game **game) {
     }
     struct Game *g = *game;
 
-    if (!game_init_sdl(g)) {
-        return false;
-    }
-
-    if (!game_load_media(g)) {
-        return false;
-    }
-
-    if (!game_init_shaders(g)) {
-        return false;
-    }
-    SDL_ClearError();
-
+    GAME_ASSERT(game_init_sdl(g));
+    GAME_ASSERT(game_load_media(g));
+    GAME_ASSERT(game_init_shaders(g));
+    
     g->target = SDL_CreateTexture(g->renderer, SDL_PIXELFORMAT_ARGB32, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH, WINDOW_HEIGHT);
-    if (!g->target) {
-        SDL_Log("Couldn't create target texture: %s\n", SDL_GetError());
-        return SDL_APP_FAILURE;
-    }
+    GAME_ASSERT_SDL(g->target, "Couldn't create target texture");
 
     srand((unsigned int)time(NULL));
 
