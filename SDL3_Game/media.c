@@ -11,16 +11,10 @@ bool game_load_media(struct Game *g) {
     GAME_ASSERT_SDL(text_surface, "Error rendering text surface");
 
     g->text_rect = (SDL_FRect){0, 0, (float)text_surface->w, (float)text_surface->h};
-    g->text_rect.x = 0;
-    g->text_rect.y = 0;
-    g->text_rect.w = (float)text_surface->w;
-    g->text_rect.h = (float)text_surface->h;
-
     g->text_texture = SDL_CreateTextureFromSurface(g->renderer, text_surface);
 
     // clear warning "Parameter 'src' is invalid"
     SDL_ClearError();
-
 
     SDL_DestroySurface(text_surface);
     text_surface = NULL;

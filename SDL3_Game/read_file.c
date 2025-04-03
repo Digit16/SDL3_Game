@@ -46,7 +46,7 @@ bool read_file(char *file_name, struct StringView *view) {
     return true;
 }
 
-void free_string_view(struct StringView *view) {
+void string_view_free(struct StringView *view) {
     if (view->data) {
         free((void *)view->data);
         view->data = NULL;

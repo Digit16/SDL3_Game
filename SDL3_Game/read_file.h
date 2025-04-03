@@ -13,6 +13,6 @@ struct StringView {
 
 bool read_file(char *file_name, struct StringView *view);
 
-void free_string_view(struct StringView *view);
+void string_view_free(struct StringView *view);
 
 #endif // SDL3_GAME_READ_FILE_H

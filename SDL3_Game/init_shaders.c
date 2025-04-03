@@ -1,18 +1,14 @@
 #include "init_shaders.h"
 #include "shaderc/shaderc.h"
 #include "read_file.h"
-
-struct ShaderData {
-    SDL_GPUShader *shader;
-    SDL_GPURenderState *state;
-};
+#include "game.h"
 
 bool game_init_shaders(struct Game *g) {
 
-    g->device = (SDL_GPUDevice *)SDL_GetPointerProperty(SDL_GetRendererProperties(g->renderer), SDL_PROP_RENDERER_GPU_DEVICE_POINTER, NULL);
-    GAME_ASSERT_SDL(g->device, "Couldn't get GPU device");
+    SDL_GPUDevice *device = (SDL_GPUDevice *)SDL_GetPointerProperty(SDL_GetRendererProperties(g->renderer), SDL_PROP_RENDERER_GPU_DEVICE_POINTER, NULL);
+    GAME_ASSERT_SDL(device, "Couldn't get GPU device");
 
-    SDL_GPUShaderFormat formats = SDL_GetGPUShaderFormats(g->device);
+    SDL_GPUShaderFormat formats = SDL_GetGPUShaderFormats(device);
     GAME_ASSERT_SDL(formats != SDL_GPU_SHADERFORMAT_INVALID, "Couldn't get supported shader formats");
     GAME_ASSERT_MSG(formats & SDL_GPU_SHADERFORMAT_SPIRV, "SPIR-V shader format not supported");
 
@@ -29,7 +25,7 @@ bool game_init_shaders(struct Game *g) {
     );
 
     // free string view
-    free_string_view(&fragment_shader_source);
+    string_view_free(&fragment_shader_source);
     shaderc_compile_options_release(shader_compiler_options);
     shaderc_compiler_release(shader_compiler);
 
@@ -52,14 +48,25 @@ bool game_init_shaders(struct Game *g) {
     info.num_uniform_buffers = 0;
     info.stage = SDL_GPU_SHADERSTAGE_FRAGMENT;
 
-    SDL_GPUShader *shader = SDL_CreateGPUShader(g->device, &info);
+    SDL_GPUShader *shader = SDL_CreateGPUShader(device, &info);
     GAME_ASSERT_SDL(shader, "Couldn't create shader");
 
     SDL_GPURenderStateDesc desc;
     SDL_INIT_INTERFACE(&desc);
     desc.fragment_shader = shader;
-    g->render_state = SDL_CreateGPURenderState(g->renderer, &desc);
-    GAME_ASSERT_SDL(g->render_state, "Couldn't create render state");
+    SDL_GPURenderState *state = SDL_CreateGPURenderState(g->renderer, &desc);
+    GAME_ASSERT_SDL(state, "Couldn't create render state");
+
+    g->shader = (struct ShaderData) {
+        .device = device,
+        .shader = shader,
+        .state = state
+    };
 
     return true;
+}
+
+void shader_data_free(struct ShaderData *shader_data) {
+    SDL_ReleaseGPUShader(shader_data->device, shader_data->shader);
+    SDL_DestroyGPURenderState(shader_data->state);
 }

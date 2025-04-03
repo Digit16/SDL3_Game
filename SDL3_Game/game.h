@@ -2,6 +2,7 @@
 #define SDL3_GAME_GAME_H
 
 #include "common.h"
+#include "init_shaders.h"
 
 struct Game {
     SDL_Window *window;
@@ -12,8 +13,7 @@ struct Game {
     SDL_Texture *text_texture;
     SDL_FRect text_rect;
     SDL_Event event;
-    SDL_GPUDevice *device;
-    SDL_GPURenderState *render_state;
+    struct ShaderData shader;
     bool is_running;
 };
 

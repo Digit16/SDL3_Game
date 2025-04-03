@@ -4,11 +4,9 @@
 #include "media.h"
 
 bool game_new(struct Game **game) {
+    // allocate new game struct
     *game = calloc(1, sizeof(struct Game));
-    if (!*game) {
-        fprintf(stderr, "Error allocating memory for game\n");
-        return false;
-    }
+    GAME_ASSERT_MSG(*game, "Error allocating memory for game");
     struct Game *g = *game;
 
     GAME_ASSERT(game_init_sdl(g));
@@ -17,8 +15,6 @@ bool game_new(struct Game **game) {
     
     g->target = SDL_CreateTexture(g->renderer, SDL_PIXELFORMAT_ARGB32, SDL_TEXTUREACCESS_TARGET, WINDOW_WIDTH, WINDOW_HEIGHT);
     GAME_ASSERT_SDL(g->target, "Couldn't create target texture");
-
-    srand((unsigned int)time(NULL));
 
     g->is_running = true;
 
@@ -29,30 +25,12 @@ void game_free(struct Game **game) {
     if (*game) {
         struct Game *g = *game;
 
-        if (g->text_texture) {
-            SDL_DestroyTexture(g->text_texture);
-            g->text_texture = NULL;
-        }
-
-        if (!g->font) {
-            TTF_CloseFont(g->font);
-            g->font = NULL;
-        }
-
-        if (!g->background) {
-            SDL_DestroyTexture(g->background);
-            g->background = NULL;
-        }
-
-        if (!g->renderer) {
-            SDL_DestroyRenderer(g->renderer);
-            g->renderer = NULL;
-        }
-
-        if (!g->window) {
-            SDL_DestroyWindow(g->window);
-            g->window = NULL;
-        }
+        SDL_DestroyTexture(g->text_texture);
+        TTF_CloseFont(g->font);
+        SDL_DestroyTexture(g->background);
+        shader_data_free(&g->shader);
+        SDL_DestroyRenderer(g->renderer);
+        SDL_DestroyWindow(g->window);
 
         free(*game);
         *game = NULL;
@@ -100,7 +78,7 @@ void game_draw(struct Game *g) {
     SDL_RenderTexture(g->renderer, g->text_texture, 0, &g->text_rect);
 
     SDL_SetRenderTarget(g->renderer, NULL);
-    SDL_SetRenderGPUState(g->renderer, g->render_state);
+    SDL_SetRenderGPUState(g->renderer, g->shader.state);
     SDL_RenderTexture(g->renderer, g->target, NULL, NULL);
     SDL_SetRenderGPUState(g->renderer, NULL);
 
