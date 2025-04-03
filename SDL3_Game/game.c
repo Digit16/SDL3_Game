@@ -73,9 +73,15 @@ void game_draw(struct Game *g) {
     SDL_SetRenderTarget(g->renderer, g->target);
 
     SDL_RenderClear(g->renderer);
-    SDL_FRect dst = {0, 0, 400, 200};
+    SDL_FRect dst = {0, 0, 200, 100};
     SDL_RenderTexture(g->renderer, g->background, 0, &dst);
-    SDL_RenderTexture(g->renderer, g->text_texture, 0, &g->text_rect);
+    SDL_FRect text_dst = {
+        .x = (WINDOW_WIDTH - g->text_rect.w) / 2,
+        .y = (WINDOW_HEIGHT - g->text_rect.h) / 2,
+        .w = g->text_rect.w,
+        .h = g->text_rect.h,
+    };
+    SDL_RenderTexture(g->renderer, g->text_texture, 0, &text_dst);
 
     SDL_SetRenderTarget(g->renderer, NULL);
     SDL_SetRenderGPUState(g->renderer, g->shader.state);
