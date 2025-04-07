@@ -20,6 +20,8 @@
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 480
 
+#define TARGET_FRAME_TIME_MS (1000 / 60)
+
 #define TEXT_VALUE "Hello World!"
 
 #define FRAGMENT_SHADER_SOURCE "shaders/fragment_shader.frag"

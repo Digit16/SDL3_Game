@@ -8,7 +8,6 @@ struct Game {
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Texture *background;
-    SDL_Texture *target;
     TTF_Font *font;
     SDL_Texture *text_texture;
     SDL_FRect text_rect;
@@ -21,7 +20,8 @@ bool game_new(struct Game **game);
 void game_free(struct Game **game);
 void game_run(struct Game *g);
 void game_events(struct Game *g);
-void game_draw(struct Game *g);
+void game_draw(struct Game *g, double delta_time);
+void game_update(struct Game *g, double delta_time);
 void game_set_random_draw_color(struct Game *g);
 
 #endif // SDL3_GAME_GAME_H
