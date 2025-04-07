@@ -104,13 +104,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>C:\dev\SDL\include;C:\SDL3\SDL3_image-3.2.4\include;C:\SDL3\SDL3_ttf-3.2.0\include;C:\dev\shaderc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>dependencies\SDL3\include;dependencies\SDL3_image-3.2.4\include;dependencies\SDL3_ttf-3.2.0\include;dependencies\shaderc\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\dev\shaderc\lib;C:\SDL3\SDL3_image-3.2.4\lib\x64;C:\SDL3\SDL3_ttf-3.2.0\lib\x64;C:\dev\SDL\VisualC\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>dependencies\SDL3\lib;dependencies\shaderc\lib;dependencies\SDL3_image-3.2.4\lib\x64;dependencies\SDL3_ttf-3.2.0\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL3.lib;SDL3_test.lib;SDL3_image.lib;SDL3_ttf.lib;shaderc_combined.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>x</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
