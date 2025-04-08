@@ -63,7 +63,7 @@ void game_events(struct Game *g) {
 void game_draw(struct Game *g, double delta_time) {
 
     // use grayscale shader
-    // SDL_SetRenderGPUState(g->renderer, g->grayscale_shader.state);
+    SDL_SetRenderGPUState(g->renderer, g->grayscale_shader.state);
 
     SDL_SetRenderDrawColor(g->renderer, 0, 0, 0, 255);
     SDL_RenderClear(g->renderer);
@@ -80,8 +80,6 @@ void game_draw(struct Game *g, double delta_time) {
     SDL_RenderRect(g->renderer, &text_dst);
 
     SDL_RenderTexture(g->renderer, g->text_texture, 0, &text_dst);
-    char *text = "Hello World!";
-    SDL_RenderDebugText(g->renderer, 100, 100, text);
 
     // switch back to default shader
     SDL_SetRenderGPUState(g->renderer, NULL);
@@ -95,11 +93,11 @@ void game_update(struct Game *g, double delta_time) {
 }
 
 void game_run(struct Game *g) {
-    uint32_t last_frame_ms = SDL_GetTicks();
+    uint64_t last_frame_ms = SDL_GetTicks();
 
     while (g->is_running) {
 
-        uint32_t time_ms = SDL_GetTicks();
+        uint64_t time_ms = SDL_GetTicks();
         double delta_time = (double)(time_ms - last_frame_ms) / 1000.0;
         last_frame_ms = time_ms;
 
