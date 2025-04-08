@@ -40,6 +40,7 @@
     <None Include="SDL3_ttf.dll" />
     <None Include=".clang-format" />
     <None Include="shaders\fragment_shader.frag" />
+    <None Include=".gitignore" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="init_sdl.h">
@@ -60,5 +61,16 @@
     <ClInclude Include="read_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\C_Logo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="images\sdl3.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\Courier New.ttf" />
   </ItemGroup>
 </Project>

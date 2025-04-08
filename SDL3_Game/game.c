@@ -26,7 +26,7 @@ void game_free(struct Game **game) {
         SDL_DestroyTexture(g->text_texture);
         TTF_CloseFont(g->font);
         SDL_DestroyTexture(g->background);
-        shader_data_free(&g->shader);
+        shader_data_free(&g->grayscale_shader);
         SDL_DestroyRenderer(g->renderer);
         SDL_DestroyWindow(g->window);
 
@@ -50,9 +50,6 @@ void game_events(struct Game *g) {
             case SDLK_Q:
                 g->is_running = false;
                 break;
-            case SDLK_R:
-                game_set_random_draw_color(g);
-                break;
             default:
                 break;
             }
@@ -63,15 +60,12 @@ void game_events(struct Game *g) {
     }
 }
 
-void game_set_random_draw_color(struct Game *g) {
-    SDL_SetRenderDrawColor(g->renderer, (uint8_t)rand(), (uint8_t)rand(), (uint8_t)rand(), 255);
-}
-
 void game_draw(struct Game *g, double delta_time) {
 
     // use grayscale shader
-    SDL_SetRenderGPUState(g->renderer, g->shader.state);
+    // SDL_SetRenderGPUState(g->renderer, g->grayscale_shader.state);
 
+    SDL_SetRenderDrawColor(g->renderer, 0, 0, 0, 255);
     SDL_RenderClear(g->renderer);
     SDL_FRect dst = {0, 0, 200, 100};
     SDL_RenderTexture(g->renderer, g->background, 0, &dst);
@@ -81,6 +75,10 @@ void game_draw(struct Game *g, double delta_time) {
         .w = g->text_rect.w,
         .h = g->text_rect.h,
     };
+
+    SDL_SetRenderDrawColor(g->renderer, 255, 0, 0, 255);
+    SDL_RenderRect(g->renderer, &text_dst);
+
     SDL_RenderTexture(g->renderer, g->text_texture, 0, &text_dst);
     char *text = "Hello World!";
     SDL_RenderDebugText(g->renderer, 100, 100, text);

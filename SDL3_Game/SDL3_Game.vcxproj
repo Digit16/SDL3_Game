@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".clang-format" />
+    <None Include=".gitignore" />
     <None Include="SDL3.dll" />
     <None Include="SDL3_image.dll" />
     <None Include="SDL3_ttf.dll" />
@@ -152,6 +153,13 @@
     <ClInclude Include="init_sdl.h" />
     <ClInclude Include="media.h" />
     <ClInclude Include="read_file.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="images\C_Logo.png" />
+    <Image Include="images\sdl3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="fonts\Courier New.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

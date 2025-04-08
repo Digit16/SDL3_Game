@@ -12,7 +12,7 @@ struct Game {
     SDL_Texture *text_texture;
     SDL_FRect text_rect;
     SDL_Event event;
-    struct ShaderData shader;
+    struct ShaderData grayscale_shader;
     bool is_running;
 };
 
@@ -22,6 +22,5 @@ void game_run(struct Game *g);
 void game_events(struct Game *g);
 void game_draw(struct Game *g, double delta_time);
 void game_update(struct Game *g, double delta_time);
-void game_set_random_draw_color(struct Game *g);
 
 #endif // SDL3_GAME_GAME_H
